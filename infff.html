@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>สุขสันต์วันเกิด 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+body {
+  margin:0;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  font-family:'Kanit',sans-serif;
+  overflow:hidden;
+  background: linear-gradient(135deg, #fff8f2, #fdeee3);
+  position:relative;
+}
+
+/* ข้อความด้านบน */
+.title-text {
+  font-size: 26px;
+  color: #d87c73;
+  font-weight: 600;
+  margin-bottom: 25px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  animation: fadeIn 2s ease;
+}
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* ลูกโป่ง */
+@keyframes floatBalloon {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-100px) rotate(10deg); }
+  100% { transform: translateY(-250px) rotate(-10deg); }
+}
+
+/* Envelope / Letter */
+.envelope-wrapper {
+  position:relative;
+  cursor:pointer;
+  text-align:center;
+  z-index:2;
+}
+.envelope {
+  width:450px;
+  height:320px;
+  position:relative;
+  background:#fffdf9;
+  border-radius:15px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.15);
+  overflow:hidden;
+  border:1px solid #eaded0;
+}
+.flap {
+  position:absolute;
+  top:0; left:0;
+  width:0; height:0;
+  border-left:225px solid transparent;
+  border-right:225px solid transparent;
+  border-bottom:160px solid #f6e4db;
+  transform-origin:top;
+  transition:transform 0.8s ease;
+  z-index:2;
+}
+.letter {
+  position:absolute;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%) translateY(-50%);
+  width:92%;
+  max-height:240px;
+  background:#fffdf9;
+  border-radius:10px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.1);
+  padding:30px 25px;
+  text-align:left;
+  opacity:0;
+  transition:all 1s ease;
+  overflow:auto;
+  z-index:1;
+}
+.letter .gif-container {text-align:center; margin-bottom:15px;}
+.letter .gif-container img {width:80px; height:80px;}
+.envelope.open .flap {transform:rotateX(180deg);}
+.envelope.open .letter {transform:translateX(-50%) translateY(0); opacity:1;}
+h2 {color:#d87c73; margin:0 0 12px 0; text-align:center; font-size:22px;}
+p {
+  font-size:16px;
+  color:#444;
+  line-height:1.9;
+  margin:0 0 10px 0;
+  word-wrap:break-word;
+}
+button {
+  display:block;
+  margin:15px auto 0 auto;
+  background:#eab9b1;
+  border:none;
+  border-radius:8px;
+  padding:12px 22px;
+  font-family:'Kanit',sans-serif;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+  transition:background 0.3s ease;
+}
+button:hover {background:#e5a49b;}
+
+/* หน้า 2 */
+.page2 {
+  display:none;
+  position:absolute;
+  inset:0;
+  background:#fffdf9;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  opacity:0;
+  transition:opacity 1s ease;
+  overflow:hidden;
+  z-index:5;
+}
+.page2.show {display:flex; opacity:1;}
+.card {
+  background:#fffdf9;
+  padding:50px 50px;
+  border-radius:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.15);
+  max-width:500px;
+  text-align:left;
+  position:relative;
+  overflow:hidden;
+  border:2px dashed #f4c2c2;
+}
+.card .gif-container {text-align:center; margin-bottom:15px;}
+.card .gif-container img {width:80px; height:80px;}
+.card h2 {text-align:center; color:#d87c73; margin-top:0; font-size:20px;}
+.card p {color:#555; line-height:1.9; font-size:15.5px; margin-top:15px;}
+.sparkle-container {position:absolute; inset:0; pointer-events:none;}
+.sparkle {
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:#ffe4e1;
+  border-radius:50%;
+  opacity:0.8;
+  animation: sparkleAnim 2s linear infinite;
+}
+@keyframes sparkleAnim {
+  0%{transform:translateY(0) scale(1);opacity:0.8;}
+  50%{transform:translateY(-20px) scale(1.2);opacity:1;}
+  100%{transform:translateY(0) scale(1);opacity:0.8;}
+}
+</style>
+</head>
+<body>
+
+<!-- เพลงเปิดเบา ๆ -->
+<audio id="bgMusic" autoplay>
+  <source src="Rex Orange County - Happiness (Official Audio).mp3" type="audio/mp3">
+</audio>
+
+<audio id="popSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+
+<!-- ข้อความด้านบน -->
+<div class="title-text">พี่โมลองเปิดจดหมายดูสิ 💌</div>
+
+<!-- หน้าแรก -->
+<div class="envelope-wrapper" id="envelopeWrapper">
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+    <div class="letter" id="letter">
+      <div class="gif-container">
+        <img id="gif" src="https://media.tenor.com/76BaX0eo304AAAAj/kitty-kitty-heart.gif" alt="cute gif">
+      </div>
+      <h2>สุขสันต์วันเกิดนะที่รัก 💖</h2>
+      <p>
+        วันนี้เป็นวันของเธอ วันที่โลกใบนี้ได้รับรอยยิ้มที่สวยที่สุดอีกครั้ง  
+        ฉันอยากให้เธอรู้ว่าเธอคือคนพิเศษสำหรับฉันเสมอ  
+        ทุกครั้งที่ได้เห็นเธอหัวเราะ มันทำให้หัวใจของฉันอ่อนโยนขึ้นเสมอ  
+        ขอบคุณที่คอยอยู่เคียงข้าง ดูแล และเข้าใจในวันที่ฉันไม่สมบูรณ์  
+        ฉันหวังว่าในทุกวันของเธอจะมีแต่สิ่งดี ๆ เข้ามา  
+        ทั้งความสุข ความสบายใจ และคนดี ๆ ที่รักและห่วงใยเธอ  
+        ขอให้ชีวิตของเธอเต็มไปด้วยแสงแดดอุ่น ๆ และเสียงหัวเราะที่สวยงาม  
+        รักเธอมากนะ ไม่ใช่แค่วันนี้...แต่ทุกวันเลย 💌
+      </p>
+      <button id="nextPage">เปิดหน้าต่อไป 💐</button>
+    </div>
+  </div>
+</div>
+
+<!-- หน้า 2 -->
+<div class="page2" id="page2">
+  <div class="card" id="finalCard">
+    <div class="sparkle-container"></div>
+    <div class="gif-container">
+      <img id="gif2" src="https://media.tenor.com/76BaX0eo304AAAAj/kitty-kitty-heart.gif" alt="cute gif 2">
+    </div>
+    <h2>อีกนิดหนึ่งจากใจฉัน 🌷</h2>
+    <p>
+      ทุกครั้งที่มองเธอยิ้ม มันเหมือนโลกทั้งใบสว่างขึ้นในพริบตา  
+      เธออาจจะไม่รู้ว่าแค่การมีเธออยู่ มันทำให้วันธรรมดาของฉันพิเศษขึ้นมากแค่ไหน  
+      อยากให้เธอใช้ชีวิตอย่างมีความสุขในแบบของตัวเอง  
+      ไม่ต้องพยายามเป็นใครอื่น เพราะเธอในแบบที่เป็นอยู่ก็น่ารักที่สุดแล้ว  
+      ขอให้สิ่งดี ๆ ทั้งหมดไหลเข้ามาในชีวิตของเธออย่างไม่ขาดสาย  
+      และไม่ว่าจะมีเรื่องอะไรเกิดขึ้น  
+      ขอให้จำไว้ว่ามีคนคนหนึ่งที่อยู่ตรงนี้  
+      พร้อมจะอยู่ข้าง ๆ และรักเธอเสมอ ไม่ว่าจะวันไหนก็ตาม 💫
+    </p>
+    <div style="text-align:center;">
+      <button id="back">กลับไปหน้าแรก 🕊️</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ลูกโป่งหน้าแรก
+const colors = ['#ff5e5e','#ff9f5e','#ffd65e','#5eff9f','#5ec9ff','#b35eff','#ff5eac'];
+for(let i=0;i<15;i++){
+  const balloon = document.createElement('div');
+  balloon.style.position='absolute';
+  balloon.style.width=20 + Math.random()*30 + 'px';
+  balloon.style.height=30 + Math.random()*40 + 'px';
+  balloon.style.borderRadius='50% 50% 50% 50% / 60% 60% 40% 40%';
+  balloon.style.background=colors[Math.floor(Math.random()*colors.length)];
+  balloon.style.left = Math.random()*90 + '%';
+  balloon.style.bottom = '-100px';
+  balloon.style.opacity = 0.9;
+  balloon.style.pointerEvents = 'none';
+  balloon.style.animation = `floatBalloon ${6 + Math.random()*4}s linear infinite`;
+  document.body.appendChild(balloon);
+}
+
+// เปิดจดหมาย + POP
+const envelopeWrapper = document.getElementById('envelopeWrapper');
+const envelope = document.getElementById('envelope');
+const letter = document.getElementById('letter');
+const popSound = document.getElementById('popSound');
+envelopeWrapper.addEventListener('click',()=>{
+  envelope.classList.toggle('open');
+  letter.style.transform = envelope.classList.contains('open')
+    ? 'translateX(-50%) translateY(0)'
+    : 'translateX(-50%) translateY(-50%)';
+  if(envelope.classList.contains('open')) { popSound.currentTime=0; popSound.play(); }
+});
+
+// หน้า 2
+const nextPage=document.getElementById('nextPage');
+const page2=document.getElementById('page2');
+const back=document.getElementById('back');
+nextPage.addEventListener('click',(e)=>{
+  e.stopPropagation();
+  page2.style.display='flex';
+  setTimeout(()=>page2.classList.add('show'),50);
+});
+back.addEventListener('click',()=>{
+  page2.classList.remove('show');
+  setTimeout(()=>{
+    page2.style.display='none';
+    envelope.classList.remove('open');
+    letter.style.transform='translateX(-50%) translateY(-50%)';
+  },500);
+});
+
+// Sparkle หน้า 2
+const sparkleContainer=document.querySelector('.sparkle-container');
+for(let i=0;i<20;i++){
+  const s=document.createElement('div');
+  s.className='sparkle';
+  s.style.left=Math.random()*100+'%';
+  s.style.top=Math.random()*100+'%';
+  s.style.animationDuration=1.5+Math.random()*1+'s';
+  sparkleContainer.appendChild(s);
+}
+
+// เพลงเปิดเบา ๆ
+const bgMusic = document.getElementById('bgMusic');
+bgMusic.volume = 0.2;
+bgMusic.loop = false;
+</script>
+
+</body>
+</html>
+
